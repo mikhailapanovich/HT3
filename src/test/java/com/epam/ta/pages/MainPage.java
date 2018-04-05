@@ -15,6 +15,12 @@ public class MainPage extends AbstractPage
 	@FindBy(xpath = "//a[contains(text(), 'New repository')]")
 	private WebElement linkNewRepository;
 
+	@FindBy(xpath = "//*[contains(@aria-label, 'View profile and more')]")
+	private WebElement dropdownUserMenu;
+
+	@FindBy(xpath = "//a[@href='/settings/profile']")
+	private WebElement linkSettings;
+
 	public MainPage(WebDriver driver)
 	{
 		super(driver);
@@ -25,6 +31,11 @@ public class MainPage extends AbstractPage
 	{
 		buttonCreateNew.click();
 		linkNewRepository.click();
+	}
+
+	public void clickOnSettings() {
+		dropdownUserMenu.click();
+		linkSettings.click();
 	}
 
 	@Override

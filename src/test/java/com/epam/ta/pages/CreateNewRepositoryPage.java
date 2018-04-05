@@ -46,6 +46,7 @@ public class CreateNewRepositoryPage extends AbstractPage
 		inputRepositoryName.sendKeys(repositoryFullName);
 		inputRepositoryDescription.sendKeys(repositoryDescription);
 		butttonCreate.click();
+		logger.info("[" + repositoryFullName + "] created");
 		return repositoryFullName;
 	}
 

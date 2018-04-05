@@ -3,18 +3,16 @@ package com.epam.ta.steps;
 import java.util.concurrent.TimeUnit;
 
 import com.epam.ta.driver.DriverSingleton;
+import com.epam.ta.pages.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
-import com.epam.ta.pages.CreateNewRepositoryPage;
-import com.epam.ta.pages.LoginPage;
-import com.epam.ta.pages.MainPage;
 
 public class Steps
 {
 	private WebDriver driver;
+	private String userName;
+	private String expectedName;
 
 	private final Logger logger = LogManager.getRootLogger();
 
@@ -33,6 +31,7 @@ public class Steps
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.openPage();
 		loginPage.login(username, password);
+		userName = username;
 	}
 
 	public boolean isLoggedIn(String username)
@@ -52,10 +51,23 @@ public class Steps
 		return expectedRepoName.equals(createNewRepositoryPage.getCurrentRepositoryName());
 	}
 
+	// broken
 	public boolean currentRepositoryIsEmpty()
 	{
 		CreateNewRepositoryPage createNewRepositoryPage = new CreateNewRepositoryPage(driver);
 		return createNewRepositoryPage.isCurrentRepositoryEmpty();
 	}
 
+	public void changeName(String name) {
+		MainPage mainPage = new MainPage(driver);
+		mainPage.clickOnSettings();
+		SettingsProfilePage settingsProfilePage = new SettingsProfilePage(driver);
+		expectedName = settingsProfilePage.changeName(name);
+	}
+
+	public boolean profileNameChangedSuccessful() {
+		ProfilePage profilePage = new ProfilePage(driver, userName);
+		profilePage.openPage();
+		return expectedName.equals(profilePage.getName());
+	}
 }

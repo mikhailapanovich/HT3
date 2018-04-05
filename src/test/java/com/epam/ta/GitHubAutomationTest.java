@@ -20,7 +20,7 @@ public class GitHubAutomationTest
 		steps.initBrowser();
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void oneCanCreateProject()
 	{
 		steps.loginGithub(USERNAME, PASSWORD);
@@ -29,14 +29,34 @@ public class GitHubAutomationTest
 		// do not use lots of asserts
 	}
 
-	@Test(description = "Login to Github")
+	@Test(description = "Login to Github", enabled = false)
 	public void oneCanLoginGithub()
 	{
 		steps.loginGithub(USERNAME, PASSWORD);
 		Assert.assertTrue(steps.isLoggedIn(USERNAME));
 	}
 
-	@AfterMethod(description = "Stop Browser")
+    // First
+    @Test(description = "Change name in profile", enabled = false)
+    public void oneCanChangeName() {
+	    steps.loginGithub(USERNAME, PASSWORD);
+        steps.changeName("New Name");
+        Assert.assertTrue(steps.profileNameChangedSuccessful());
+    }
+
+    // Second
+	@Test(description = "Delete repo", enabled = false)
+	public void first() {
+
+	}
+
+	// Third
+	@Test(description = "Add README to repository", enabled = false)
+	public void third() {
+
+	}
+
+	@AfterMethod(description = "Stop Browser", enabled = false)
 	public void stopBrowser()
 	{
 		steps.closeDriver();
