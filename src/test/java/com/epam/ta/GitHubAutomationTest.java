@@ -37,7 +37,7 @@ public class GitHubAutomationTest
 	}
 
     // First
-    @Test(description = "Change name in profile", enabled = false)
+    @Test(description = "Change name in profile")
     public void oneCanChangeName() {
 	    steps.loginGithub(USERNAME, PASSWORD);
         steps.changeName("New Name");
@@ -45,7 +45,7 @@ public class GitHubAutomationTest
     }
 
     // Second
-	@Test(description = "Delete repo", enabled = false)
+	@Test(description = "Delete repo")
 	public void oneCanDeleteRepo() {
 		steps.loginGithub(USERNAME, PASSWORD);
 		steps.createNewRepository("RepoForDeletion", "this repository must be deleted");
@@ -54,12 +54,15 @@ public class GitHubAutomationTest
 	}
 
 	// Third
-	@Test(description = "Add README to repository from quick setup", enabled = false)
+	@Test(description = "Add README to repository from quick setup")
 	public void third() {
-
+        steps.loginGithub(USERNAME, PASSWORD);
+        steps.createNewRepository("RepoForReadme", "add readme, after creating new repo");
+        steps.addReadme();
+        Assert.assertTrue(steps.isReadmeExist());
 	}
 
-	@AfterMethod(description = "Stop Browser", enabled = true)
+	@AfterMethod(description = "Stop Browser")
 	public void stopBrowser()
 	{
 		steps.closeDriver();

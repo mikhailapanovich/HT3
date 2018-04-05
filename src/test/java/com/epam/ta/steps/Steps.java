@@ -6,6 +6,7 @@ import com.epam.ta.pages.profile.ProfilePage;
 import com.epam.ta.pages.profile.SettingsProfilePage;
 import com.epam.ta.pages.repository.RepositoryPage;
 import com.epam.ta.pages.repository.RepositorySettingsPage;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -88,5 +89,16 @@ public class Steps
 	public boolean isLastRepositoryDeleted() {
 		RepositoryPage repositoryPage = new RepositoryPage(driver, userName, lastRepoName);
 		return repositoryPage.isDeleted();
+	}
+
+	public void addReadme() {
+		RepositoryPage repositoryPage = new RepositoryPage(driver, userName, lastRepoName);
+		repositoryPage.clickOnREADME();
+		repositoryPage.clickCommitNewFile();
+	}
+
+	public boolean isReadmeExist() {
+		RepositoryPage repositoryPage = new RepositoryPage(driver, userName, lastRepoName);
+		return repositoryPage.isFileCommited("README.md");
 	}
 }

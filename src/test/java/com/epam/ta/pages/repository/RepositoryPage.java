@@ -22,6 +22,15 @@ public class RepositoryPage extends AbstractPage
     @FindBy(xpath = "//*[@id='js-flash-container']/div/div")
     private WebElement resultContainer;
 
+    @FindBy(xpath = "//a[@data-ga-click='Empty repo, click, Clicked README link']")
+    private WebElement linkReadme;
+
+    @FindBy(id = "submit-file")
+    private WebElement buttonCommit;
+
+    @FindBy(xpath = "//a[@class='js-navigation-open']")
+    private WebElement firstCommitedFile;
+
 
 	public RepositoryPage(WebDriver driver, String username, String repoName)
 	{
@@ -43,9 +52,25 @@ public class RepositoryPage extends AbstractPage
         return true;
     }
 
+    public void clickOnREADME() {
+        linkReadme.click();
+    }
+
+    public void clickCommitNewFile() {
+	    buttonCommit.click();
+    }
+
 	@Override
 	public void openPage()
 	{
 		driver.get(baseUrl);
 	}
+
+    public boolean isFileCommited(String filename) {
+        try {
+            return firstCommitedFile.getAttribute("title").equals(filename);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
