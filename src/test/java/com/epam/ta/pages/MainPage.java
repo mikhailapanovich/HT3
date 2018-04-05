@@ -9,7 +9,7 @@ public class MainPage extends AbstractPage
 {
 	private final String BASE_URL = "https://github.com/";
 
-	@FindBy(xpath = "//a[contains(@aria-label, 'Create new')]")
+	@FindBy(xpath = "//*[contains(@aria-label, 'Create new')]")
 	private WebElement buttonCreateNew;
 
 	@FindBy(xpath = "//a[contains(text(), 'New repository')]")
