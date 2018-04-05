@@ -1,5 +1,6 @@
-package com.epam.ta.pages;
+package com.epam.ta.pages.profile;
 
+import com.epam.ta.pages.AbstractPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProfilePage extends AbstractPage
 {
-	private String baseUrl = "https://github.com/";
+	private String baseUrl;
 	private final Logger logger = LogManager.getRootLogger();
 
     @FindBy(xpath = "//h1[@class='vcard-names']/span[@itemprop='name']")

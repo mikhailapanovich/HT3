@@ -41,22 +41,25 @@ public class GitHubAutomationTest
     public void oneCanChangeName() {
 	    steps.loginGithub(USERNAME, PASSWORD);
         steps.changeName("New Name");
-        Assert.assertTrue(steps.profileNameChangedSuccessful());
+        Assert.assertTrue(steps.profileNameChangedSuccessfully());
     }
 
     // Second
 	@Test(description = "Delete repo", enabled = false)
-	public void first() {
-
+	public void oneCanDeleteRepo() {
+		steps.loginGithub(USERNAME, PASSWORD);
+		steps.createNewRepository("RepoForDeletion", "this repository must be deleted");
+		steps.deleteLastRepository();
+		Assert.assertTrue(steps.isLastRepositoryDeleted());
 	}
 
 	// Third
-	@Test(description = "Add README to repository", enabled = false)
+	@Test(description = "Add README to repository from quick setup", enabled = false)
 	public void third() {
 
 	}
 
-	@AfterMethod(description = "Stop Browser", enabled = false)
+	@AfterMethod(description = "Stop Browser", enabled = true)
 	public void stopBrowser()
 	{
 		steps.closeDriver();

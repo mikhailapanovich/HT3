@@ -1,18 +1,22 @@
 package com.epam.ta.steps;
 
-import java.util.concurrent.TimeUnit;
-
 import com.epam.ta.driver.DriverSingleton;
 import com.epam.ta.pages.*;
+import com.epam.ta.pages.profile.ProfilePage;
+import com.epam.ta.pages.profile.SettingsProfilePage;
+import com.epam.ta.pages.repository.RepositoryPage;
+import com.epam.ta.pages.repository.RepositorySettingsPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class Steps
 {
 	private WebDriver driver;
 	private String userName;
 	private String expectedName;
+	private String lastRepoName;
 
 	private final Logger logger = LogManager.getRootLogger();
 
@@ -48,6 +52,7 @@ public class Steps
 		mainPage.clickOnCreateNewRepositoryButton();
 		CreateNewRepositoryPage createNewRepositoryPage = new CreateNewRepositoryPage(driver);
 		String expectedRepoName = createNewRepositoryPage.createNewRepository(repositoryName, repositoryDescription);
+		lastRepoName = expectedRepoName;
 		return expectedRepoName.equals(createNewRepositoryPage.getCurrentRepositoryName());
 	}
 
@@ -65,9 +70,23 @@ public class Steps
 		expectedName = settingsProfilePage.changeName(name);
 	}
 
-	public boolean profileNameChangedSuccessful() {
+	public boolean profileNameChangedSuccessfully() {
 		ProfilePage profilePage = new ProfilePage(driver, userName);
 		profilePage.openPage();
 		return expectedName.equals(profilePage.getName());
+	}
+
+	public void deleteLastRepository() {
+		RepositoryPage repositoryPage = new RepositoryPage(driver, userName, lastRepoName);
+		repositoryPage.openPage();
+		repositoryPage.clickOnSettings();
+		RepositorySettingsPage repositorySettingsPage = new RepositorySettingsPage(driver, userName, lastRepoName);
+		repositorySettingsPage.deleteRepository(lastRepoName);
+		logger.info("Repo [" + lastRepoName + "] has been deleted");
+	}
+
+	public boolean isLastRepositoryDeleted() {
+		RepositoryPage repositoryPage = new RepositoryPage(driver, userName, lastRepoName);
+		return repositoryPage.isDeleted();
 	}
 }

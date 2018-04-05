@@ -1,5 +1,6 @@
-package com.epam.ta.pages;
+package com.epam.ta.pages.profile;
 
+import com.epam.ta.pages.AbstractPage;
 import com.epam.ta.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
